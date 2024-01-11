@@ -2,7 +2,8 @@ import {Button, FormControl, FormLabel, Input, Text, VStack} from "@chakra-ui/re
 import React, {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import Timer from "./Timer";
-import {useAuth} from "../store";
+import useAuth from "../store";
+
 
 export default function AuthForm() {
     const {register,
@@ -11,16 +12,28 @@ export default function AuthForm() {
         watch,
         handleSubmit,
         formState: {errors}} = useForm()
+    const loading =  useAuth((state)=> state.loading)
+    const firstEnter =  useAuth((state)=> state.firstEnter)
+    const authUser =  useAuth((state)=> state.authUser)
+    const setNewPass =  useAuth((state)=> state.setNewPass)
 
-    const {authUser} = useAuth((state)=> {
-        authUser: state.authUser
-    })
+    const authUserFunc = (data)=> {
+        authUser(data).then(r => console.log(r))
+        console.log(data)
+    }
+    const setNewPassord = (data) => {
+        setNewPass(data).then(r => console.log(r))
+        console.log(data)
+    }
 
-    const [firstEnter , setFirstEnter] = useState(false);
+    if (firstEnter) {
+        setValue('userpass' , '');
+        setFocus("userpass")
+    }
 
     return (
         <>
-            <form onSubmit={handleSubmit(authUser)}>
+            <form onSubmit={firstEnter ? handleSubmit(setNewPassord) : handleSubmit(authUserFunc)}>
                 <VStack width='300px' spacing='20px'>
                     <FormControl>
                         <FormLabel>Имя пользователя</FormLabel>
