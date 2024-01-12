@@ -1,7 +1,6 @@
 import {Button, FormControl, FormLabel, Input, Text, VStack} from "@chakra-ui/react";
 import React, {useEffect, useState} from "react";
-import {useForm} from "react-hook-form";
-import Timer from "./Timer";
+import {useForm, useFormState} from "react-hook-form";
 import useAuth from "../store";
 
 
@@ -11,11 +10,13 @@ export default function AuthForm() {
         setFocus ,
         watch,
         handleSubmit,
-        formState: {errors}} = useForm()
+        formState: {errors}} = useForm();
     const loading =  useAuth((state)=> state.loading)
     const firstEnter =  useAuth((state)=> state.firstEnter)
     const authUser =  useAuth((state)=> state.authUser)
     const setNewPass =  useAuth((state)=> state.setNewPass)
+    const error =  useAuth((state)=> state.error);
+    const errorEnterCounter =  useAuth((state)=> state.errorEnterCounter);
 
     const authUserFunc = (data)=> {
         authUser(data).then(r => console.log(r))
@@ -30,17 +31,27 @@ export default function AuthForm() {
         setValue('userpass' , '');
         setFocus("userpass")
     }
+    useEffect(() => {
+        if (error) {
+            setValue('userpass' , '');
+            setValue('userlogin' , '');
+            setFocus("userlogin")
+        }
+    }, [error]);
+
 
     return (
         <>
-            <form onSubmit={firstEnter ? handleSubmit(setNewPassord) : handleSubmit(authUserFunc)}>
+            <form  onSubmit={firstEnter ? handleSubmit(setNewPassord) : handleSubmit(authUserFunc)}>
                 <VStack width='300px' spacing='20px'>
                     <FormControl>
                         <FormLabel>Имя пользователя</FormLabel>
-                        <Input {...register('userlogin' , { required: {
+                        <Input {...register('userlogin' , {
+                            required: {
                                 message:'Обязательное поле',
                                 value:true
-                            }})} type='text' placeholder='Имя пользователя' size='lg'/>
+                            }
+                        })} type='text' placeholder='Имя пользователя' size='lg'/>
                         <Text>{errors?.userlogin?.message}</Text>
                     </FormControl>
 
@@ -49,7 +60,8 @@ export default function AuthForm() {
                         <Input  {...register('userpass' , { required: {
                                 message:'Обязательное поле',
                                 value:true
-                            }})} type='password' size='lg'/>
+                            }
+                        })} type='password' size='lg'/>
                         <Text>{errors?.userpass?.message}</Text>
                     </FormControl>
                     {
@@ -68,9 +80,8 @@ export default function AuthForm() {
                             </FormControl> :
                             ''
                     }
-                    <Button width='100%' colorScheme='#e4e9eb' size='lg' variant='outline' type='submit' >Войти</Button>
+                    <Button  width='100%' colorScheme='#e4e9eb' size='lg' variant='outline' type='submit' >Войти</Button>
                 </VStack>
-                <Timer/>
             </form>
 
         </>

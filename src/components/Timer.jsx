@@ -1,5 +1,6 @@
 import React, { useState , useEffect } from 'react'
 import { Hide, Show, Text , ScaleFade ,useDisclosure } from '@chakra-ui/react';
+import useAuth from "../store";
 
 const useCountdown = (onDone, initialSeconds) => {
     const [seconds, setSeconds] = useState(initialSeconds);
@@ -28,14 +29,19 @@ const useCountdown = (onDone, initialSeconds) => {
 
 export default function Timer() {
     const { onOpen,onClose } = useDisclosure()
-    const onDone = () => setHideStatus(true);
     const { seconds } = useCountdown(onDone, 10);
     const [hideStatus, setHideStatus] = useState(false);
+    const errorEnterCounter =  useAuth((state)=> state.errorEnterCounter);
+    const resetErrorEnterCounter =  useAuth((state)=> state.resetErrorEnterCounter)
+    function onDone() {
+        setHideStatus(true);
+        resetErrorEnterCounter();
+    }
 
     return (
         <>
             {
-                hideStatus ?
+                hideStatus && errorEnterCounter !== 3 ?
                     <ScaleFade initialScale={0.9} in={onOpen}>
                         <Hide>
                             <div className='blocker-timer'>
@@ -47,7 +53,7 @@ export default function Timer() {
                     <ScaleFade initialScale={0.9} in={onClose}>
                         <Show>
                             <div className='blocker-timer'>
-                                <Text>Повторная попытка авторизации через {seconds} секунд</Text>
+                                <Text textAlign='center'>Внимание! Вход в систему заблокирован! <br/> Повторная попытка авторизации через {seconds} секунд</Text>
                             </div>
                         </Show>
                     </ScaleFade>

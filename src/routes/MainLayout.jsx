@@ -6,11 +6,9 @@ import {useNavigate} from "react-router-dom";
 export default function MainLayout() {
     const navigate = useNavigate();
     let isAuth = sessionStorage.getItem('isAuth')
-    useEffect(() => {
-        if (!isAuth) {
-            navigate("/auth")
-        }
-    }, [navigate,isAuth]);
+    if (!isAuth) {
+        navigate("/auth")
+    }
 
     return (
         <>

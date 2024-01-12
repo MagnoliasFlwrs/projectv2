@@ -23,7 +23,7 @@ export default function ErrorModal({isOpen, onOpen, onClose , error}) {
             <Modal isOpen={showModal} onClose={hideModal} >
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Modal Title</ModalHeader>
+                    <ModalHeader>Ошибка</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
                         {errorMessage}
