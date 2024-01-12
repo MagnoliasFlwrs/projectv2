@@ -53,7 +53,7 @@ export default function Timer() {
                     <ScaleFade initialScale={0.9} in={onClose}>
                         <Show>
                             <div className='blocker-timer'>
-                                <Text textAlign='center'>Внимание! Вход в систему заблокирован! <br/> Повторная попытка авторизации через {seconds} секунд</Text>
+                                <Text textAlign='center'>Повторная попытка авторизации через {seconds} секунд</Text>
                             </div>
                         </Show>
                     </ScaleFade>

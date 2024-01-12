@@ -7,9 +7,10 @@ const useAuth = create(devtools(persist((set, get) => ({
     error:null,
     firstEnter: false,
     showErrorModal:false,
-    errorEnterCounter: 3,
+    errorEnterCounter: 0,
     isAuth:false,
     loading:false,
+    attentionMessage:'',
     resetErrorEnterCounter: () => set((state) => ({errorEnterCounter: 0})),
     authUser: async (user)=> {
         set({loading: true})
@@ -37,8 +38,6 @@ const useAuth = create(devtools(persist((set, get) => ({
                 set({showErrorModal: true})
                 set({loading: false})
                 set({errorEnterCounter: 3})
-
-
             }
             return res.data
         } catch (error) {

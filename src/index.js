@@ -7,15 +7,37 @@ import LoginLayout from "./routes/LoginLayout";
 import {ChakraProvider} from "@chakra-ui/react";
 
 
-localStorage.setItem('user' , JSON.stringify({
-    userlogin : 'admin',
-    userpass : 'admin'
-}))
-
 const router = createBrowserRouter([
     {
         path: '/',
-        element:<MainLayout/>
+        element:<MainLayout/>,
+        children: [
+            {
+                path: "user",
+                element: <p>user page</p>,
+            },
+            {
+                path: "dashboard",
+                element: <p>dashboard page</p>,
+            },
+            {
+                path: "reference",
+                element: <p>reference page</p>,
+            },
+            {
+                path: "convercation",
+                element: <p>convercation page</p>,
+            },
+            {
+                path: "reports",
+                element: <p>reports page</p>,
+            },
+            {
+                path: "settings",
+                element: <p>settings page</p>,
+            },
+
+        ],
     },
     {
         path: 'auth',

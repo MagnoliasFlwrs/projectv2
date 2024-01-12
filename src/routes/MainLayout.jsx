@@ -1,19 +1,24 @@
 import React, {useEffect} from 'react'
-import {Link} from "@chakra-ui/react";
+import {Flex, Link} from "@chakra-ui/react";
 import {Outlet} from "react-router";
 import {useNavigate} from "react-router-dom";
+import useAuth from "../store";
+import Header from "../components/Header";
 
 export default function MainLayout() {
     const navigate = useNavigate();
-    let isAuth = sessionStorage.getItem('isAuth')
-    if (!isAuth) {
-        navigate("/auth")
-    }
+    const isAuth =  useAuth((state)=> state.isAuth)
+    useEffect(() => {
+        if (!isAuth) {
+            navigate("/auth")
+        }
+    }, [isAuth]);
+
 
     return (
-        <>
-            <Link>настройки</Link>
+        <Flex flexDirection='column' gap='50px' padding='0 16px'>
+            <Header/>
             <Outlet/>
-        </>
+        </Flex>
     )
 }

@@ -11,6 +11,7 @@ export default function AuthForm() {
         watch,
         handleSubmit,
         formState: {errors}} = useForm();
+
     const loading =  useAuth((state)=> state.loading)
     const firstEnter =  useAuth((state)=> state.firstEnter)
     const authUser =  useAuth((state)=> state.authUser)
@@ -26,11 +27,13 @@ export default function AuthForm() {
         setNewPass(data).then(r => console.log(r))
         console.log(data)
     }
+    useEffect(() => {
+        if (firstEnter) {
+            setValue('userpass' , '');
+            setFocus("userpass")
+        }
+    }, [firstEnter]);
 
-    if (firstEnter) {
-        setValue('userpass' , '');
-        setFocus("userpass")
-    }
     useEffect(() => {
         if (error) {
             setValue('userpass' , '');
