@@ -5,6 +5,10 @@ import {createBrowserRouter, RouterProvider, useNavigate} from "react-router-dom
 import MainLayout from "./routes/MainLayout";
 import LoginLayout from "./routes/LoginLayout";
 import {ChakraProvider} from "@chakra-ui/react";
+import UserAdd from "./routes/UserAdd";
+import DashboardLayout from "./routes/DashboardLayout";
+import SettingsLayout from "./routes/SettingsLayout";
+import ReportsLayout from "./routes/ReportsLayout";
 
 
 const router = createBrowserRouter([
@@ -18,7 +22,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "dashboard",
-                element: <p>dashboard page</p>,
+                element: <DashboardLayout/>,
             },
             {
                 path: "reference",
@@ -30,11 +34,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "reports",
-                element: <p>reports page</p>,
+                element: <ReportsLayout/>,
             },
             {
                 path: "settings",
-                element: <p>settings page</p>,
+                element: <SettingsLayout/>,
             },
 
         ],
@@ -42,7 +46,11 @@ const router = createBrowserRouter([
     {
         path: 'auth',
         element : <LoginLayout/>
-    }
+    },
+    {
+        path: "useradd",
+        element: <UserAdd/>,
+    },
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
