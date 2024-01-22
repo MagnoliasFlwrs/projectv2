@@ -9,6 +9,7 @@ import UserAdd from "./routes/UserAdd";
 import DashboardLayout from "./routes/DashboardLayout";
 import SettingsLayout from "./routes/SettingsLayout";
 import ReportsLayout from "./routes/ReportsLayout";
+import ConversationLayout from "./routes/ConversationLayout";
 
 
 const router = createBrowserRouter([
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "convercation",
-                element: <p>convercation page</p>,
+                element: <ConversationLayout/>,
             },
             {
                 path: "reports",
