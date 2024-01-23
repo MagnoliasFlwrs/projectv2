@@ -64,4 +64,12 @@ const useAuth = create(devtools(persist((set, get) => ({
     hideModal: () => {set({showErrorModal:false,})}
 }), { name: 'auth' })))
 
-export default useAuth
+export default useAuth;
+
+export const useConversation = create(devtools((set)=>({
+    filterModal : false,
+    showFilterModal: ()=> {set({filterModal: true})},
+    hideFilterModal: ()=> {set({filterModal: false})}
+})))
+
+

@@ -16,7 +16,7 @@ export default function MainLayout() {
 
 
     return (
-        <Flex flexDirection='column' gap='50px' padding='0 16px'>
+        <Flex flexDirection='column' gap='50px' padding='0 16px' minHeight='100vh'>
             <Header/>
             <Outlet/>
         </Flex>
