@@ -9,7 +9,7 @@ export default function ConversationFilterModal() {
     const filterModal = useConversation((state) => state.filterModal);
     const hideFilterModal = useConversation((state) => state.hideFilterModal);
     return (
-        <Modal isOpen={filterModal} onClose={hideFilterModal}>
+        <Modal isOpen={filterModal} onClose={hideFilterModal} size='800px'>
             <ModalOverlay/>
             <ModalContent>
                 <ModalHeader width='100%' display='flex' justifyContent='space-between' borderBottom='1px solid #000' >

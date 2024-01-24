@@ -68,8 +68,21 @@ export default useAuth;
 
 export const useConversation = create(devtools((set)=>({
     filterModal : false,
+    conditions : [
+        {
+            id : '0',
+            numFrom : '258-33-25*',
+            numTo : '358-33-75*',
+        }
+    ],
+    resetFilter: false,
+    confirmReset:false,
     showFilterModal: ()=> {set({filterModal: true})},
-    hideFilterModal: ()=> {set({filterModal: false})}
+    hideFilterModal: ()=> {set({filterModal: false})},
+    isResetFilter: ()=> {set({resetFilter: true})},
+    showConfirmReset: () => {set({confirmReset: true})},
+    hideConfirmReset: () => {set({confirmReset: false})},
+
 })))
 
 

@@ -145,8 +145,8 @@ export default function ConversationTable() {
                         </Header>
 
                         <Body>
-                            {tableList.map((item) => (
-                                <Row item={item} key={item.id}>
+                            {tableList.map((item , i) => (
+                                <Row item={item} key={i}>
                                     <Cell>
                                         {item.date.toLocaleDateString("en-US", {
                                             year: "numeric",
@@ -171,7 +171,7 @@ export default function ConversationTable() {
                 <span style={{ cursor: 'pointer' }} onClick={showFilterModal}>
                   <FilterAltIcon/>
                 </span>
-                <button style={{ cursor: 'pointer' , border: '1px solid #000' , padding: '5px 15px' }}>
+                <button style={{ cursor: 'pointer' , border: '1px solid #000' , padding: '5px 15px' , fontSize: '14px' }}>
                     Скачать все отфильтрованные записи
                 </button>
                 <span>
