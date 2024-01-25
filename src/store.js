@@ -69,16 +69,16 @@ export default useAuth;
 export const useConversation = create(devtools((set)=>({
     filterModal : false,
     conditions : [
-        {
-            id : '0',
-            numFrom : '258-33-25*',
-            numTo : '358-33-75*',
-        },
-        {
-            id : '1',
-            numFrom : 're5yha5teyha5y',
-            numTo : '458-33-75*',
-        },
+        // {
+        //     id : '0',
+        //     numFrom : '258-33-25*',
+        //     numTo : '358-33-75*',
+        // },
+        // {
+        //     id : '1',
+        //     numFrom : 're5yha5teyha5y',
+        //     numTo : '458-33-75*',
+        // },
     ],
     resetFilter: false,
     confirmReset:false,
@@ -87,6 +87,11 @@ export const useConversation = create(devtools((set)=>({
     isResetFilter: ()=> {set({resetFilter: true})},
     showConfirmReset: () => {set({confirmReset: true})},
     hideConfirmReset: () => {set({confirmReset: false})},
+    addCondition: () => set(state => ({conditions: [...state.conditions  , {id: Math.random() ,numFrom : '' ,numTo:'' }]})),
+    deleteCondition: (id) =>
+        set((state) => ({
+            conditions: state.conditions.filter((condition) => condition.id !== id)
+        })),
 
 })))
 

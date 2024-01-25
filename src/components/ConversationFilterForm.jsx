@@ -1,5 +1,5 @@
 import {Button, Flex, Input, Select, Text, useDisclosure} from "@chakra-ui/react";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Downshift from "downshift";
 import Kalendaryo from "kalendaryo";
 import Calendar from "./Calendar";
@@ -9,25 +9,37 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import "../../src/index.css";
-import {useForm} from "react-hook-form";
+import {Controller, useForm} from "react-hook-form";
 import {useConversation} from "../store";
 import ConfirmResetModal from "./ConfirmResetModal";
+import FilterConditionItem from "./FilterConditionItem";
+import DatePicker from "react-datepicker"
+import ReactDatePicker from "react-datepicker";
+
 
 export default function ConversationFilterForm({event,...props}) {
     const { isOpen } = useDisclosure();
-    const {register,reset,
+    const {register,reset,control,
         handleSubmit,
         formState: {errors}} = useForm();
     function onSubmit(data) {
         console.log(data)
     }
+    const [startDate, setStartDate] = useState(new Date());
     const conditions =  useConversation((state) => state.conditions);
     const hideFilterModal = useConversation((state) => state.hideFilterModal);
     const resetFilter = useConversation((state) => state.resetFilter);
     const showConfirmReset = useConversation((state) => state.showConfirmReset);
+    const addCondition = useConversation((state) => state.addCondition);
+
+    useEffect(() => {
+        reset()
+    }, [resetFilter]);
+
+
     return (
         <>
-            <form  onSubmit={handleSubmit(onSubmit)}>
+            <form  onSubmit={handleSubmit(onSubmit)} >
                 <Flex position='relative' width='100%' padding='30px' border='1px solid #000000' marginTop='20px'>
                     <Text position='absolute'
                           top='-14px' left='30px'
@@ -36,31 +48,18 @@ export default function ConversationFilterForm({event,...props}) {
                     <Flex gap='50px'>
                         <Flex gap='10px' alignItems='center'>
                             <span>c:</span>
-                            <Downshift
-                                itemToString={date => (date ? format(date, "MM/dd/yyyy") : "")}
-                            >
-                                {({ getInputProps, getItemProps, toggleMenu, isOpen, selectedItem }) => (
-                                    <div className="date-picker-container">
-                                        <input type='text' value={selectedItem}
-                                            {...register('datefrom' , {
-                                            })}
-                                            {...getInputProps({
-                                                readOnly: true,
-                                                onClick: toggleMenu
-                                            })}
-                                        />
-
-                                        {isOpen ? (
-                                            <Kalendaryo
-                                                startCurrentDateAt={selectedItem}
-                                                selectedItem={selectedItem}
-                                                getItemProps={getItemProps}
-                                                render={Calendar}
-                                            />
-                                        ) : null}
-                                    </div>
+                            <Controller
+                                control={control}
+                                name="dateFrom"
+                                render={({ field: { onChange, onBlur, value, ref } }) => (
+                                    <ReactDatePicker
+                                        onChange={onChange}
+                                        onBlur={onBlur}
+                                        selected={value}
+                                    />
                                 )}
-                            </Downshift>
+                            />
+
                             <CalendarMonthIcon/>
                             <Select size='sm' {...register('timefrom' , {
                                 required: {
@@ -85,32 +84,17 @@ export default function ConversationFilterForm({event,...props}) {
                         </Flex>
                         <Flex gap='10px' alignItems='center'>
                             <span>до:</span>
-                            <Downshift
-                                itemToString={date => (date ? format(date, "MM/dd/yyyy") : "")}
-                            >
-                                {({ getInputProps, getItemProps, toggleMenu, isOpen, selectedItem }) => (
-
-                                    <div className="date-picker-container">
-                                        <input type='text' value={selectedItem}
-                                            {...register('dateto' , {
-                                            })}
-                                            {...getInputProps({
-                                                readOnly: true,
-                                                onClick: toggleMenu
-                                            })}
-                                        />
-
-                                        {isOpen ? (
-                                            <Kalendaryo
-                                                startCurrentDateAt={selectedItem}
-                                                selectedItem={selectedItem}
-                                                getItemProps={getItemProps}
-                                                render={Calendar}
-                                            />
-                                        ) : null}
-                                    </div>
+                            <Controller
+                                control={control}
+                                name="dateTo"
+                                render={({ field: { onChange, onBlur, value, ref } }) => (
+                                    <ReactDatePicker
+                                        onChange={onChange}
+                                        onBlur={onBlur}
+                                        selected={value}
+                                    />
                                 )}
-                            </Downshift>
+                            />
                             <CalendarMonthIcon/>
                             <Select size='sm' {...register('timeto' , {
                                 required: {
@@ -147,44 +131,15 @@ export default function ConversationFilterForm({event,...props}) {
                         {
                             conditions ?
                                 conditions.map((item , i) =>
-                                    <Flex key={i} width='100%' gap='30px' alignItems='center'>
-                                        <Flex gap='15px' alignItems='center'>
-                                            <Text whiteSpace='nowrap' fontSize='14px'>Вызывающий номер</Text>
-                                            <Input width='150px' type='text' size='sm' value={item.numFrom} readOnly={true}
-                                                   {...register('callingNum'+ i  , {
-                                                       required: {
-                                                           message:'Обязательное поле',
-                                                           value:true
-                                                       }
-                                                   })}
-                                            />
-                                        </Flex>
-                                        <Flex gap='15px' alignItems='center'>
-                                            <Text whiteSpace='nowrap' fontSize='14px'>Отвечающий номер</Text>
-                                            <Input width='150px' type='text'  size='sm' value={item.numTo} readOnly={true}
-                                                   {...register('amswerNum'+ i , {
-                                                       required: {
-                                                           message:'Обязательное поле',
-                                                           value:true
-                                                       }
-                                                   })}
-                                            />
-                                        </Flex>
-                                        <Text padding='5px 10px' border='1px solid #000'
-                                              display='flex' alignItems='center' gap='10px' cursor='pointer'>
-                                            <DeleteIcon/>
-                                            Удалить
-                                        </Text>
-                                    </Flex>
+                                    <FilterConditionItem register={register} key={i} item={item}/>
                                 )
-
                                 :
                                 ''
                         }
                     </Flex>
                     <Text padding='5px 10px' border='1px solid #000'
                           display='flex' alignItems='center'
-                          gap='10px' cursor='pointer' width='fit-content'>
+                          gap='10px' cursor='pointer' width='fit-content' onClick={addCondition}>
                         <AddIcon/>
                         Добавить условие
                     </Text>
@@ -226,7 +181,7 @@ export default function ConversationFilterForm({event,...props}) {
                     </Button>
                     <Flex gap='20px'>
                         <Button  width='100%' colorScheme='#e4e9eb' size='sm' width='fit-content'
-                                 variant='outline' type='submit' margin='0 0 0 auto'>Сменить</Button>
+                                 variant='outline' type='submit' margin='0 0 0 auto'>Применить</Button>
                         <Button type='button' size='sm' onClick={hideFilterModal}>
                             Отменить
                         </Button>
