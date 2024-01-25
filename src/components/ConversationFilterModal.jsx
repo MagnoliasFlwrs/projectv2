@@ -19,7 +19,7 @@ export default function ConversationFilterModal() {
                 </span>
                 </ModalHeader>
                 <ModalBody>
-                    <ConversationFilterForm/>
+                    <ConversationFilterForm test={'fgdsgfds'} />
                 </ModalBody>
                 <ModalFooter></ModalFooter>
             </ModalContent>

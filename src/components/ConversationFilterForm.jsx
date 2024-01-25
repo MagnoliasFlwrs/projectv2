@@ -13,7 +13,7 @@ import {useForm} from "react-hook-form";
 import {useConversation} from "../store";
 import ConfirmResetModal from "./ConfirmResetModal";
 
-export default function ConversationFilterForm() {
+export default function ConversationFilterForm({event,...props}) {
     const { isOpen } = useDisclosure();
     const {register,reset,
         handleSubmit,
@@ -27,7 +27,7 @@ export default function ConversationFilterForm() {
     const showConfirmReset = useConversation((state) => state.showConfirmReset);
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form  onSubmit={handleSubmit(onSubmit)}>
                 <Flex position='relative' width='100%' padding='30px' border='1px solid #000000' marginTop='20px'>
                     <Text position='absolute'
                           top='-14px' left='30px'
@@ -43,10 +43,6 @@ export default function ConversationFilterForm() {
                                     <div className="date-picker-container">
                                         <input type='text' value={selectedItem}
                                             {...register('datefrom' , {
-                                                required: {
-                                                    message:'Обязательное поле',
-                                                    value:true
-                                                }
                                             })}
                                             {...getInputProps({
                                                 readOnly: true,
@@ -97,10 +93,6 @@ export default function ConversationFilterForm() {
                                     <div className="date-picker-container">
                                         <input type='text' value={selectedItem}
                                             {...register('dateto' , {
-                                                required: {
-                                                    message:'Обязательное поле',
-                                                    value:true
-                                                }
                                             })}
                                             {...getInputProps({
                                                 readOnly: true,
@@ -159,7 +151,7 @@ export default function ConversationFilterForm() {
                                         <Flex gap='15px' alignItems='center'>
                                             <Text whiteSpace='nowrap' fontSize='14px'>Вызывающий номер</Text>
                                             <Input width='150px' type='text' size='sm' value={item.numFrom} readOnly={true}
-                                                   {...register('callingNum' , {
+                                                   {...register('callingNum'+ i  , {
                                                        required: {
                                                            message:'Обязательное поле',
                                                            value:true
@@ -170,7 +162,7 @@ export default function ConversationFilterForm() {
                                         <Flex gap='15px' alignItems='center'>
                                             <Text whiteSpace='nowrap' fontSize='14px'>Отвечающий номер</Text>
                                             <Input width='150px' type='text'  size='sm' value={item.numTo} readOnly={true}
-                                                   {...register('amswerNum' , {
+                                                   {...register('amswerNum'+ i , {
                                                        required: {
                                                            message:'Обязательное поле',
                                                            value:true
@@ -189,7 +181,6 @@ export default function ConversationFilterForm() {
                                 :
                                 ''
                         }
-
                     </Flex>
                     <Text padding='5px 10px' border='1px solid #000'
                           display='flex' alignItems='center'
@@ -234,9 +225,8 @@ export default function ConversationFilterForm() {
                         Очистить фильтр
                     </Button>
                     <Flex gap='20px'>
-                        <Button type='submit' size='sm' onClick={handleSubmit(onSubmit)}>
-                            Применить
-                        </Button>
+                        <Button  width='100%' colorScheme='#e4e9eb' size='sm' width='fit-content'
+                                 variant='outline' type='submit' margin='0 0 0 auto'>Сменить</Button>
                         <Button type='button' size='sm' onClick={hideFilterModal}>
                             Отменить
                         </Button>
