@@ -82,6 +82,7 @@ export const useConversation = create(devtools((set)=>({
     ],
     resetFilter: false,
     confirmReset:false,
+    downloadRecord:false,
     showFilterModal: ()=> {set({filterModal: true})},
     hideFilterModal: ()=> {set({filterModal: false})},
     isResetFilter: ()=> {set({resetFilter: true})},
@@ -92,7 +93,8 @@ export const useConversation = create(devtools((set)=>({
         set((state) => ({
             conditions: state.conditions.filter((condition) => condition.id !== id)
         })),
-
+    showDownloadRecord:()=>{set({downloadRecord: true})},
+    hideDownloadRecord:()=>{set({downloadRecord: false})},
 })))
 
 

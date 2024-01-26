@@ -32,6 +32,7 @@ export default function ConversationFilterForm({event,...props}) {
     const showConfirmReset = useConversation((state) => state.showConfirmReset);
     const addCondition = useConversation((state) => state.addCondition);
 
+
     useEffect(() => {
         reset()
     }, [resetFilter]);

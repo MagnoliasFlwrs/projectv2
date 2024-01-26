@@ -10,11 +10,13 @@ import * as React from "react";
 import {Flex, useDisclosure} from "@chakra-ui/react";
 import ConversationFilterModal from "./ConversationFilterModal";
 import {useConversation} from "../store";
+import DownloadRecord from "./DownloadRecord";
 
 
 export default function ConversationTable() {
     const { isOpen } = useDisclosure();
     const showFilterModal = useConversation((state) => state.showFilterModal);
+    const showDownloadRecord = useConversation((state) => state.showDownloadRecord);
 
     const nodes = [
         {
@@ -171,7 +173,8 @@ export default function ConversationTable() {
                 <span style={{ cursor: 'pointer' }} onClick={showFilterModal}>
                   <FilterAltIcon/>
                 </span>
-                <button style={{ cursor: 'pointer' , border: '1px solid #000' , padding: '5px 15px' , fontSize: '14px' }}>
+                <button style={{ cursor: 'pointer' , border: '1px solid #000' , padding: '5px 15px' , fontSize: '14px' }}
+                onClick={showDownloadRecord}>
                     Скачать все отфильтрованные записи
                 </button>
                 <span>
@@ -194,6 +197,7 @@ export default function ConversationTable() {
                 </span>
             </div>
             <ConversationFilterModal isOpen={isOpen}/>
+            <DownloadRecord/>
         </Flex>
 
     )
