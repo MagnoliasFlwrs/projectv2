@@ -1,15 +1,20 @@
-import {Flex, Text} from "@chakra-ui/react";
-import ChangeAdminPasswordForm from "../components/ChangeAdminPasswordForm";
-import ServerParamsForm from "../components/ServerParamsForm";
-import ATCIntegration from "../components/ATCIntegration";
+import React from 'react';
+import {Flex, Link, Text} from "@chakra-ui/react";
+import {Outlet} from "react-router";
 
-export default function SettingsLayout() {
+const SettingsLayout = () => {
     return (
-        <Flex flexDirection='column' alignItems='center' gap='50px' paddingBottom='100px'>
-            <Text>Настройка системных параметров</Text>
-            <ChangeAdminPasswordForm/>
-            <ServerParamsForm/>
-            <ATCIntegration/>
+        <Flex flexDirection='column' gap='30px'>
+            <Flex paddingLeft='83px' gap='20px'>
+                <Link href='/settings/groups'>Группы и пользователи</Link>
+                <Link href='/settings/calls'>Правила контроля звонков</Link>
+            </Flex>
+            <Flex width='100%' flexDirection='column' alignItems='center' gap='30px' paddingBottom='100px'>
+                <Text fontSize='30px'>Настройки</Text>
+                <Outlet/>
+            </Flex>
         </Flex>
-    )
-}
+    );
+};
+
+export default SettingsLayout;

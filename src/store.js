@@ -68,21 +68,86 @@ export default useAuth;
 
 export const useConversation = create(devtools((set)=>({
     filterModal : false,
-    conditions : [
-        // {
-        //     id : '0',
-        //     numFrom : '258-33-25*',
-        //     numTo : '358-33-75*',
-        // },
-        // {
-        //     id : '1',
-        //     numFrom : 're5yha5teyha5y',
-        //     numTo : '458-33-75*',
-        // },
+    conditions : [],
+    records: [
+        {
+            date :new Date(2020, 1, 18),
+            callingNum : '123-11-11',
+            callingOst : 1,
+            answerNum : '147-88-52',
+            answerOst: 2,
+            duration : '85s',
+            actions : 'action',
+            src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
+            id: Math.random()
+        },
+        {
+            date :new Date(2024, 1, 27),
+            callingNum : '222-11-11',
+            callingOst : 5,
+            answerNum : '297-88-52',
+            answerOst: 3,
+            duration : '41s',
+            actions : 'action',
+            src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+            id: Math.random()
+        },
+        {
+            date :new Date(2022, 1, 27),
+            callingNum : '322-11-09',
+            callingOst : 5,
+            answerNum : '397-12-52',
+            answerOst: 3,
+            duration : '1s',
+            actions : 'action',
+            src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
+            id: Math.random()
+        },
+        {
+            date :new Date(2020, 1, 18),
+            callingNum : '423-11-11',
+            callingOst : 1,
+            answerNum : '447-88-52',
+            answerOst: 2,
+            duration : '85s',
+            actions : 'action',
+            src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
+            id: Math.random()
+        },
+        {
+            date :new Date(2024, 1, 27),
+            callingNum : '522-11-11',
+            callingOst : 5,
+            answerNum : '597-88-52',
+            answerOst: 3,
+            duration : '41s',
+            actions : 'action',
+            src:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+            id: Math.random()
+        },
+        {
+            date :new Date(2022, 1, 27),
+            callingNum : '622-11-09',
+            callingOst : 5,
+            answerNum : '697-12-52',
+            answerOst: 3,
+            duration : '1s',
+            actions : 'action',
+            src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
+            id: Math.random()
+        },
     ],
     resetFilter: false,
     confirmReset:false,
     downloadRecord:false,
+    playerModal:false,
+    currentRecord:'',
+    downloadSuccessModal:false,
+    deleteSuccessModal:false,
+    showDownloadSuccessModal: ()=> {set({downloadSuccessModal: true})},
+    hideDownloadSuccessModal: ()=> {set({downloadSuccessModal: false})},
+    showDeleteSuccessModal: ()=> {set({deleteSuccessModal: true})},
+    hideDeleteSuccessModal: ()=> {set({deleteSuccessModal: false})},
     showFilterModal: ()=> {set({filterModal: true})},
     hideFilterModal: ()=> {set({filterModal: false})},
     isResetFilter: ()=> {set({resetFilter: true})},
@@ -95,6 +160,28 @@ export const useConversation = create(devtools((set)=>({
         })),
     showDownloadRecord:()=>{set({downloadRecord: true})},
     hideDownloadRecord:()=>{set({downloadRecord: false})},
+    showPlayerModal: ()=> {set({playerModal: true})},
+    hidePlayerModal: ()=> {set({playerModal: false})},
+    setCurrentRecord:(id) =>
+        set((state) => ({
+            currentRecord: state.records.filter((record) => record.id === id)
+        })),
+    deleteCurrentRecord:(id) =>
+        set((state) => ({
+            records: state.records.filter((record) => record.id !== id)
+        })),
 })))
+
+
+
+export const useGroupsAndUsers = create(devtools((set, get) => ({
+    groups:[],
+    addGroupModal:false,
+    addGroup: (name) => set(state => ({groups: [...state.groups  , {id: Math.random() ,groupName: name }]})),
+    showAddGroupModal: ()=> {set({addGroupModal: true})},
+    hideAddGroupModal: ()=> {set({addGroupModal: false})},
+}), { name: 'groups' }))
+
+
 
 

@@ -893,4 +893,6 @@ button:focus {
   height: 1em;
   vertical-align: -0.125em;
 }
-
+.rhap_container {
+  box-shadow: none !important;
+}

@@ -7,9 +7,11 @@ import LoginLayout from "./routes/LoginLayout";
 import {ChakraProvider} from "@chakra-ui/react";
 import UserAdd from "./routes/UserAdd";
 import DashboardLayout from "./routes/DashboardLayout";
-import SettingsLayout from "./routes/SettingsLayout";
+import SystemSettingsLayout from "./routes/SystemSettingsLayout";
 import ReportsLayout from "./routes/ReportsLayout";
 import ConversationLayout from "./routes/ConversationLayout";
+import SettingsLayout from "./routes/SettingsLayout";
+import GroupsLayout from "./routes/GroupsLayout";
 
 
 const router = createBrowserRouter([
@@ -38,8 +40,22 @@ const router = createBrowserRouter([
                 element: <ReportsLayout/>,
             },
             {
+                path: "systemsettings",
+                element: <SystemSettingsLayout/>,
+            },
+            {
                 path: "settings",
                 element: <SettingsLayout/>,
+                children: [
+                    {
+                        path: "groups",
+                        element: <GroupsLayout/>,
+                    },
+                    {
+                        path: "calls",
+                        element: <p>groups</p>,
+                    }
+                ]
             },
 
         ],

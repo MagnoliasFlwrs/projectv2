@@ -11,9 +11,11 @@ const DownloadRecordForm = () => {
         formState: {errors}} = useForm();
 
     const hideDownloadRecord = useConversation((state) => state.hideDownloadRecord);
+    const showDownloadSuccessModal = useConversation((state) => state.showDownloadSuccessModal);
 
     function onSubmit(data) {
         console.log(data)
+        showDownloadSuccessModal()
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -53,7 +55,7 @@ const DownloadRecordForm = () => {
                     <Textarea {...register('comment' )} resize='none'/>
                 </Flex>
                 <Flex width='100%' justifyContent='flex-end' gap='30px'>
-                    <Button type='submit'>Выгрузить</Button>
+                    <Button type='submit' onClick={onSubmit}>Выгрузить</Button>
                     <Button type='button' onClick={hideDownloadRecord}>Отменить</Button>
                 </Flex>
             </Flex>

@@ -11,43 +11,20 @@ import {Flex, useDisclosure} from "@chakra-ui/react";
 import ConversationFilterModal from "./ConversationFilterModal";
 import {useConversation} from "../store";
 import DownloadRecord from "./DownloadRecord";
+import PlayerModal from "./PlayerModal";
+import DownloadRecordSuccessModal from "./DownloadRecordSuccessModal";
+import DeleteRecordSuccessModal from "./DeleteRecordSuccessModal";
 
 
 export default function ConversationTable() {
     const { isOpen } = useDisclosure();
     const showFilterModal = useConversation((state) => state.showFilterModal);
     const showDownloadRecord = useConversation((state) => state.showDownloadRecord);
+    const nodes = useConversation((state) => state.records);
+    const showPlayerModal = useConversation((state) => state.showPlayerModal);
+    const setCurrentRecord = useConversation((state) => state.setCurrentRecord);
 
-    const nodes = [
-        {
-            date :new Date(2020, 1, 18),
-            callingNum : '123-11-11',
-            callingOst : 1,
-            answerNum : '147-88-52',
-            answerOst: 2,
-            duration : '85s',
-            actions : 'action'
-        },
-        {
-            date :new Date(2020, 1, 27),
-            callingNum : '122-11-11',
-            callingOst : 5,
-            answerNum : '197-88-52',
-            answerOst: 3,
-            duration : '41s',
-            actions : 'action'
-        },
-        {
-            date :new Date(2020, 1, 27),
-            callingNum : '122-11-09',
-            callingOst : 5,
-            answerNum : '197-12-52',
-            answerOst: 3,
-            duration : '1s',
-            actions : 'action'
-        },
 
-    ]
     const theme = useTheme({
         Table: `
             border: 1px solid #000;
@@ -128,6 +105,10 @@ export default function ConversationTable() {
     function onSortChange(action, state) {
         console.log(action, state);
     }
+    function recordClick(id){
+        setCurrentRecord(id);
+        showPlayerModal()
+    }
     return (
         <Flex display='flex' flexDirection='column' justifyContent='space-between' flex='1 0 0' gap='30px'>
 
@@ -147,8 +128,8 @@ export default function ConversationTable() {
                         </Header>
 
                         <Body>
-                            {tableList.map((item , i) => (
-                                <Row item={item} key={i}>
+                            {tableList.map((item) => (
+                                <Row item={item} key={item.id} onClick={()=> recordClick(item.id)}>
                                     <Cell>
                                         {item.date.toLocaleDateString("en-US", {
                                             year: "numeric",
@@ -198,6 +179,9 @@ export default function ConversationTable() {
             </div>
             <ConversationFilterModal isOpen={isOpen}/>
             <DownloadRecord/>
+            <PlayerModal/>
+            <DownloadRecordSuccessModal/>
+            <DeleteRecordSuccessModal/>
         </Flex>
 
     )
