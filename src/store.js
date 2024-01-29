@@ -176,10 +176,20 @@ export const useConversation = create(devtools((set)=>({
 
 export const useGroupsAndUsers = create(devtools((set, get) => ({
     groups:[],
+    numbers:[],
     addGroupModal:false,
+    blockMessage:false,
     addGroup: (name) => set(state => ({groups: [...state.groups  , {id: Math.random() ,groupName: name }]})),
     showAddGroupModal: ()=> {set({addGroupModal: true})},
     hideAddGroupModal: ()=> {set({addGroupModal: false})},
+    showBlockMessage: ()=> {set({blockMessage: true})},
+    hideBlockMessage: ()=> {set({blockMessage: false})},
+    addNumbers: () => set(state => ({
+        numbers: [...state.numbers  , {id: Math.random() ,numberFrom:'' , numberTo: '' }]})),
+    deleteNumbers:(id) =>
+        set((state) => ({
+            numbers: state.numbers.filter((number) => number.id !== id)
+        })),
 }), { name: 'groups' }))
 
 

@@ -7,6 +7,7 @@ import {useGroupsAndUsers} from "../store";
 
 const GroupItem = ({item}) => {
     const showAddGroupModal = useGroupsAndUsers((state) => state.showAddGroupModal);
+    const showBlockMessage = useGroupsAndUsers((state) => state.showBlockMessage);
     return (
         <>
             {
@@ -17,8 +18,8 @@ const GroupItem = ({item}) => {
                             <Text onClick={showAddGroupModal}>
                                 <EditNoteIcon fontSize='medium' cursor='pointer'/>
                             </Text>
-                            <Text>
-                                <BlockIcon fontSize='medium' cursor='pointer'/>
+                            <Text onClick={showBlockMessage}>
+                                <BlockIcon fontSize='medium' cursor='pointer' />
                             </Text>
                         </Flex>
                     </Flex> :

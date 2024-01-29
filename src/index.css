@@ -896,3 +896,9 @@ button:focus {
 .rhap_container {
   box-shadow: none !important;
 }
+.pagination {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+
+}
